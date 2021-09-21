@@ -1,0 +1,56 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ 
+ENTITY psuedo_random_testbench IS
+END psuedo_random_testbench;
+ 
+ARCHITECTURE behavior OF psuedo_random_testbench IS 
+ 
+    // Component Declaration for the Unit Under Test (UUT)
+ 
+    COMPONENT pseudo_random
+    PORT(
+         clk : IN  std_logic;
+         reset : IN  std_logic;
+         data : OUT  std_logic_vector(3 downto 0)
+        );
+    END COMPONENT;
+    
+
+   //Inputs
+   signal clk : std_logic := '0';
+   signal reset : std_logic := '0';
+
+ 	 //Outputs
+   signal data : std_logic_vector(3 downto 0);
+
+   
+BEGIN
+ 
+	// Instantiate the Unit Under Test (UUT)
+   uut: pseudo_random PORT MAP (
+          clk => clk,
+          reset => reset,
+          data => data
+        );
+
+   // Clock process definitions
+   clock_process: process 
+	 begin
+	  clk <= '0';
+	  wait for 10ns;
+	  clk <= '1';
+	  wait for 10ns;
+	end process;
+
+   //Stimulus process
+   stim_proc: process
+   begin		
+      reset<= '0';
+		wait for 20ns;
+		reset<= '1';
+		wait for 100ns;
+		
+   end process;
+
+END;
