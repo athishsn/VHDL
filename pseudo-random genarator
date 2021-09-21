@@ -1,0 +1,31 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity pseudo_random is                         // entity definition with ports
+    Port ( clk : in  STD_LOGIC;
+           reset : in  STD_LOGIC;
+           data : out  STD_LOGIC_VECTOR (3 downto 0));
+end pseudo_random;
+
+architecture structural of pseudo_random is     // structural block of the code
+
+signal srout: std_logic_vector(3 downto 0);
+signal wire1, wire2: std_logic;
+
+component shift_register is                     //component shift_register is defined
+		Port ( clk : in  STD_LOGIC;
+           sin : in  STD_LOGIC;
+           Q : out  STD_LOGIC_VECTOR (3 downto 0));
+end component;
+
+begin
+	sr1: shift_register port map(clk=> clk, sin=> wire2, Q=>srout);    // assignment of ports
+	
+	wire1<= srout(3) xor srout(2);                  // concurrent signal assignment 
+	wire2<= wire1 or reset;
+	data<= srout;
+	
+	
+end structural;
+
+
